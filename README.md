@@ -12,7 +12,10 @@ Linuxcnc configuration for my 3-axis mill.
 
 * WIP: homign using [cia402_homecomp](https://github.com/rodw-au/cia402_homecomp)
     * state-machine starts HOME_START
-    * joint 0 amplifier fault (drive display Er87.1  "One-time excessive position reference increment")
+    * we get to CUSTOM_BEGIN
+    * we get to CUSTOM_INIT
+    * we get to CUSTOM_RUNNING
+    * Then: joint 0 amplifier fault (drive display Er87.1  "One-time excessive position reference increment")
 * Servo tuning using 'servo-tune.py' from [biber-ethercat](https://github.com/shulter/biber-ethercat) works. (alternatively over USB-cable to drive and Windows software)
 * jogging all axes from AXIS and jogwheel works
 
