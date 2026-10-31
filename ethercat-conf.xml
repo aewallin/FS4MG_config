@@ -32,12 +32,12 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 				<pdoEntry idx="6061" subIdx="00" bitLen="8" halPin="mode-display" halType="s32" /> 
 				<pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="x-pos-actual" halType="s32"/>
 				<pdoEntry idx="606C" subIdx="00" bitLen="32" halPin="x-vel-actual" halType="s32"/> 
-				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="x-tor-actual" halType="s32"/>	
+				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="x-tor-actual" halType="s32"/>
 				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="x-touch-probe-1" halType="s32"/>
 				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="x-touch-probe-2" halType="s32"/>
 				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="x-touch-probe-status" halType="s32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="x-fault-code" halType="s32"/>
-				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="x-follow-error" halType="s32"/>
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
 			</pdo>
 
 		</syncManager>
@@ -60,12 +60,14 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 			<pdo idx="1A00">
 				<pdoEntry idx="6041" subIdx="00" bitLen="16" halPin="y-status-word" halType="u32"/>
 				<pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="y-pos-actual" halType="s32"/>
+				<pdoEntry idx="606C" subIdx="00" bitLen="32" halPin="y-vel-actual" halType="s32"/> 
+				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="y-tor-actual" halType="s32"/>
 				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="y-touch-probe-1" halType="s32"/>
 				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="y-touch-probe-2" halType="s32"/>
 				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="y-touch-probe-status" halType="s32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="y-fault-code" halType="s32"/>
 				<pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="y-DI-status" halType="u32"/>
-				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="y-follow-error" halType="s32"/>
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
 			</pdo>
 		</syncManager>
 	</slave>
@@ -86,12 +88,14 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 			<pdo idx="1A00">
 				<pdoEntry idx="6041" subIdx="00" bitLen="16" halPin="z-status-word" halType="u32"/>
 				<pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="z-pos-actual" halType="s32"/>
+				<pdoEntry idx="606C" subIdx="00" bitLen="32" halPin="z-vel-actual" halType="s32"/> 
+				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="z-tor-actual" halType="s32"/>
 				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="z-touch-probe-1" halType="s32"/>
 				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="z-touch-probe-2" halType="s32"/>
 				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="z-touch-probe-status" halType="s32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="z-fault-code" halType="s32"/>
 				<pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="z-DI-status" halType="u32"/>
-				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="z-follow-error" halType="s32"/>
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
 			</pdo>
 		</syncManager>
 	</slave>

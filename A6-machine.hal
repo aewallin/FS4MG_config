@@ -15,6 +15,7 @@ loadrt lcec
 loadrt cia402 count=3
 
 
+
 # Add EtherCAT and motion processing functions to the servo thread
 addf    lcec.read-all            servo-thread
 addf    cia402.0.read-all        servo-thread
@@ -51,6 +52,9 @@ net x-enable      <= joint.0.amp-enable-out   => cia402.0.enable
 net x-amp-fault   => joint.0.amp-fault-in     <= cia402.0.drv-fault
 net x-pos-cmd     <= joint.0.motor-pos-cmd    => cia402.0.pos-cmd => joint.0.cia-pos-cmd
 net x-pos-fb      => joint.0.motor-pos-fb     <=  cia402.0.pos-fb 
+setp joint.0.jog-accel-fraction 0.3
+setp joint.1.jog-accel-fraction 0.5
+setp joint.2.jog-accel-fraction 0.5
 # joint.0.cia-pos-fb output-pin, can't connect here 
  
 # Motion signal mappings for axis Y
