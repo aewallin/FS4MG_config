@@ -1,0 +1,26 @@
+
+# connect motor torque from lcec to pyvcp panel
+# for pyvcp panel
+loadrt scale names=t_scale_x,t_scale_y,t_scale_z
+loadrt conv_s32_float names=t2f_x,t2f_y,t2f_z
+addf t2f_x servo-thread
+addf t2f_y servo-thread
+addf t2f_z servo-thread
+addf t_scale_x servo-thread
+addf t_scale_y servo-thread
+addf t_scale_z servo-thread
+setp t_scale_x.gain 0.1
+setp t_scale_y.gain 0.1
+setp t_scale_z.gain 0.1
+
+net x-torque-raw lcec.0.A6X.x-tor-actual => t2f_x.in 
+net x-torque-rawf t2f_x.out => t_scale_x.in
+net x-torque-scaled t_scale_x.out => pyvcp.x-motor-torque
+
+net y-torque-raw lcec.0.A6Y.y-tor-actual => t2f_y.in 
+net y-torque-rawf t2f_y.out => t_scale_y.in
+net y-torque-scaled t_scale_y.out => pyvcp.y-motor-torque
+
+net z-torque-raw lcec.0.A6Z.z-tor-actual => t2f_z.in 
+net z-torque-rawf t2f_z.out => t_scale_z.in
+net z-torque-scaled t_scale_z.out => pyvcp.z-motor-torque

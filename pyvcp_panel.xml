@@ -1,0 +1,36 @@
+<pyvcp>
+
+    <vbox>
+      <label text="X Torque (%)"/>
+      <bar>
+        <halpin>"x-motor-torque"</halpin>
+        <min_>-100</min_>
+        <max_>100</max_>
+        <fillcolor>"red"</fillcolor>
+        <bg>"black"</bg>
+        <orientation>"horizontal"</orientation>
+      </bar>
+    </vbox>
+    <vbox>
+      <label text="Y Torque (%)"/>
+      <bar>
+        <halpin>"y-motor-torque"</halpin>
+        <min_>-100</min_>
+        <max_>100</max_>
+        <fillcolor>"red"</fillcolor>
+        <bg>"black"</bg>
+        <orientation>"horizontal"</orientation>
+      </bar>
+    </vbox>
+    <vbox>
+      <label text="Z Torque (%)"/>
+      <bar>
+        <halpin>"z-motor-torque"</halpin>
+        <min_>-100</min_>
+        <max_>100</max_>
+        <fillcolor>"red"</fillcolor>
+        <bg>"black"</bg>
+        <orientation>"horizontal"</orientation>
+      </bar>
+    </vbox>
+</pyvcp>
