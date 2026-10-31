@@ -67,7 +67,7 @@ net z-pos-fb      => joint.2.motor-pos-fb     <= cia402.2.pos-fb
 # EtherCAT to CIA402 driver mapping
 net x-statusword      lcec.0.A6X.x-status-word       => cia402.0.statusword  => joint.0.cia-statusword
 
-net x-drv-act-pos     lcec.0.A6X.x-pos-actual        => cia402.0.drv-actual-position => joint.0.cia-drv-actual_position
+net x-drv-act-pos     lcec.0.A6X.x-pos-actual        => cia402.0.drv-actual-position => joint.0.cia-drv-actual-position
 net x-drv-act-vel     lcec.0.A6X.x-vel-actual        => cia402.0.drv-actual-velocity => joint.0.cia-drv-actual-velocity
 net x-drv-act-mode    lcec.0.A6X.mode-display        => cia402.0.opmode-display => joint.0.cia-opmode-display
 
