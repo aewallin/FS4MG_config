@@ -5,7 +5,7 @@ Linuxcnc configuration for my 3-axis mill.
 * Linuxcnc on Lenovo M720q (i5-8400T, 16 GiB RAM)
 * FS4MG frame (https://www.cnc-technik-mueller.de/fs4mg/)
 * Stepperonline A6-EC servodrives with 400W servos and 17-bit encoders.
-* Beckhoff IO
+* Beckhoff IO, EL2809, EL1809
 * spindle config TBD
 
 ## linuxcnc install
@@ -16,6 +16,9 @@ Linuxcnc configuration for my 3-axis mill.
 * linuxcnc-ethercat from https://linuxcnc-ethercat.github.io/apt/
 
 ## Ethercat
+
+* ethercat pdos in file `ethercat_pdos.txt` 
+* ethercat sdos in file `ethercat_sdos.txt` 
 
 ```
 $ ethercat slaves

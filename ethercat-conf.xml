@@ -1,0 +1,99 @@
+<!--
+ethercat config from https://github.com/aewallin/FS4MG_config
+-->
+<masters>
+<master idx="0" appTimePeriod="1000000" refClockSyncCycles="1">
+    <slave idx="0" type="EK1100"/>
+    <slave idx="1" type="EL2809" />
+    <slave idx="2" type="EL2809" />
+    <slave idx="3" type="EL1809" />
+    <slave idx="4" type="EL1809" />
+	<slave idx="5" type="generic" vid="00400000" pid="00000715" configPdos="true" name="A6X">
+		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="25000"/>
+		<watchdog divider="2498" intervals="1000"/>
+		
+		<syncManager idx="2" dir="out">
+			<pdo idx="1600">
+				<pdoEntry idx="6040" subIdx="00" bitLen="16" halPin="x-control-word" halType="u32"/>
+				<pdoEntry idx="6060" subIdx="00" bitLen="8" halPin="control-mode" halType="s32" />
+				<pdoEntry idx="607A" subIdx="00" bitLen="32" halPin="x-target-position" halType="s32"/>
+				<pdoEntry idx="60FF" subIdx="00" bitLen="32" halPin="x-target-velocity" halType="s32"/>
+				<pdoEntry idx="607C" subIdx="00" bitLen="32" halPin="home-offset" halType="s32"/>
+				<pdoEntry idx="6098" subIdx="00" bitLen="8" halPin="x-homing-method" halType="s32"/>
+                <pdoEntry idx="6099" subIdx="01" bitLen="32" halPin="homing-high-velocity" halType="u32"/>
+				<pdoEntry idx="6099" subIdx="02" bitLen="32" halPin="homing-low-velocity" halType="u32"/>
+				<pdoEntry idx="609A" subIdx="00" bitLen="32" halPin="homing-acceleration" halType="u32"/>
+				<pdoEntry idx="60B8" subIdx="00" bitLen="16" halPin="x-touch-probe-function" halType="u32"/>
+			</pdo>
+		</syncManager>
+		<syncManager idx="3" dir="in">
+			<pdo idx="1A00"> <!-- NOTE: Stepperonline A6 has strict limit of 10 pdos, no more! -->
+				<pdoEntry idx="6041" subIdx="00" bitLen="16" halPin="x-status-word" halType="u32"/>
+				<pdoEntry idx="6061" subIdx="00" bitLen="8" halPin="mode-display" halType="s32" /> 
+				<pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="x-pos-actual" halType="s32"/>
+				<pdoEntry idx="606C" subIdx="00" bitLen="32" halPin="x-vel-actual" halType="s32"/> 
+				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="x-tor-actual" halType="s32"/>	
+				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="x-touch-probe-1" halType="s32"/>
+				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="x-touch-probe-2" halType="s32"/>
+				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="x-touch-probe-status" halType="s32"/>
+				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="x-fault-code" halType="s32"/>
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="x-follow-error" halType="s32"/>
+			</pdo>
+
+		</syncManager>
+	</slave>
+	
+	
+	<slave idx="6" type="generic" vid="00400000" pid="00000715" configPdos="true" name="A6Y">
+		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="25000"/>
+		<watchdog divider="2498" intervals="1000"/>
+
+		<syncManager idx="2" dir="out">
+			<pdo idx="1600">
+				<pdoEntry idx="6040" subIdx="00" bitLen="16" halPin="y-control-word" halType="u32"/>
+				<pdoEntry idx="607A" subIdx="00" bitLen="32" halPin="y-target-position" halType="s32"/>
+				<pdoEntry idx="6098" subIdx="00" bitLen="8" halPin="y-homing-method" halType="s32"/>
+				<pdoEntry idx="60B8" subIdx="00" bitLen="16" halPin="y-touch-probe-function" halType="u32"/>
+			</pdo>
+		</syncManager>
+		<syncManager idx="3" dir="in">
+			<pdo idx="1A00">
+				<pdoEntry idx="6041" subIdx="00" bitLen="16" halPin="y-status-word" halType="u32"/>
+				<pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="y-pos-actual" halType="s32"/>
+				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="y-touch-probe-1" halType="s32"/>
+				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="y-touch-probe-2" halType="s32"/>
+				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="y-touch-probe-status" halType="s32"/>
+				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="y-fault-code" halType="s32"/>
+				<pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="y-DI-status" halType="u32"/>
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="y-follow-error" halType="s32"/>
+			</pdo>
+		</syncManager>
+	</slave>
+	
+	
+	<slave idx="7" type="generic" vid="00400000" pid="00000715" configPdos="true" name="A6Z">
+		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="25000"/>
+		<watchdog divider="2498" intervals="1000"/>
+		<syncManager idx="2" dir="out">
+			<pdo idx="1600">
+				<pdoEntry idx="6040" subIdx="00" bitLen="16" halPin="z-control-word" halType="u32"/>
+				<pdoEntry idx="607A" subIdx="00" bitLen="32" halPin="z-target-position" halType="s32"/>
+				<pdoEntry idx="6098" subIdx="00" bitLen="8" halPin="z-homing-method" halType="s32"/>
+				<pdoEntry idx="60B8" subIdx="00" bitLen="16" halPin="z-touch-probe-function" halType="u32"/>
+			</pdo>
+		</syncManager>
+		<syncManager idx="3" dir="in">
+			<pdo idx="1A00">
+				<pdoEntry idx="6041" subIdx="00" bitLen="16" halPin="z-status-word" halType="u32"/>
+				<pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="z-pos-actual" halType="s32"/>
+				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="z-touch-probe-1" halType="s32"/>
+				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="z-touch-probe-2" halType="s32"/>
+				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="z-touch-probe-status" halType="s32"/>
+				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="z-fault-code" halType="s32"/>
+				<pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="z-DI-status" halType="u32"/>
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="z-follow-error" halType="s32"/>
+			</pdo>
+		</syncManager>
+	</slave>
+</master>
+</masters>

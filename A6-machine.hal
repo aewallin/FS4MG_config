@@ -1,0 +1,103 @@
+# -----------------------------
+# EtherCAT and Motion Config
+# -----------------------------
+
+
+# Load kinematics and motion modules
+loadrt [KINS]KINEMATICS
+loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[KINS]JOINTS
+
+# Load EtherCAT configuration from XML
+loadusr -W lcec_conf ethercat-conf.xml
+
+# Load EtherCAT and CIA402 drivers
+loadrt lcec
+loadrt cia402 count=3
+
+
+# Add EtherCAT and motion processing functions to the servo thread
+addf    lcec.read-all            servo-thread
+addf    cia402.0.read-all        servo-thread
+addf    cia402.1.read-all        servo-thread
+addf    cia402.2.read-all        servo-thread
+addf    motion-command-handler   servo-thread
+addf    motion-controller        servo-thread
+addf    cia402.0.write-all       servo-thread
+addf    cia402.1.write-all       servo-thread
+addf    cia402.2.write-all       servo-thread
+addf    lcec.write-all           servo-thread
+
+# Enable EMC control
+# safety-relay enabled on lcec.0.3.din-0
+net ext-estop-signal  =>  iocontrol.0.emc-enable-in <= lcec.0.3.din-0
+
+# -----------------------------
+# AXIS X Y Z Configuration
+# -----------------------------
+
+# Set CIA402 into Profile Position Mode
+setp cia402.0.csp-mode 1
+setp cia402.1.csp-mode 1
+setp cia402.2.csp-mode 1
+# pos-scale = (encoder counts per revolution)  /  (units per revolution)
+# 17-bit encoder counts per rev pow(2, 17)= 131072
+# with 5mm/rev ballscrew set 26214.4
+setp cia402.0.pos-scale 26214.4
+setp cia402.1.pos-scale 26214.4
+setp cia402.2.pos-scale 26214.4
+
+# Motion signal mappings for axis X
+net x-enable      <= joint.0.amp-enable-out   => cia402.0.enable
+net x-amp-fault   => joint.0.amp-fault-in     <= cia402.0.drv-fault
+net x-pos-cmd     <= joint.0.motor-pos-cmd    => cia402.0.pos-cmd => joint.0.cia-pos-cmd
+net x-pos-fb      => joint.0.motor-pos-fb     <=  cia402.0.pos-fb 
+# joint.0.cia-pos-fb output-pin, can't connect here 
+ 
+# Motion signal mappings for axis Y
+net y-enable      <= joint.1.amp-enable-out   => cia402.1.enable
+net y-amp-fault   => joint.1.amp-fault-in     <= cia402.1.drv-fault
+net y-pos-cmd     <= joint.1.motor-pos-cmd    => cia402.1.pos-cmd
+net y-pos-fb      => joint.1.motor-pos-fb     <= cia402.1.pos-fb
+# Motion signal mappings for axis Z
+net z-enable      <= joint.2.amp-enable-out   => cia402.2.enable
+net z-amp-fault   => joint.2.amp-fault-in     <= cia402.2.drv-fault
+net z-pos-cmd     <= joint.2.motor-pos-cmd    => cia402.2.pos-cmd
+net z-pos-fb      => joint.2.motor-pos-fb     <= cia402.2.pos-fb
+
+# EtherCAT to CIA402 driver mapping
+net x-statusword      lcec.0.A6X.x-status-word       => cia402.0.statusword  => joint.0.cia-statusword
+
+net x-drv-act-pos     lcec.0.A6X.x-pos-actual        => cia402.0.drv-actual-position => joint.0.cia-drv-actual_position
+net x-drv-act-vel     lcec.0.A6X.x-vel-actual        => cia402.0.drv-actual-velocity => joint.0.cia-drv-actual-velocity
+net x-drv-act-mode    lcec.0.A6X.mode-display        => cia402.0.opmode-display => joint.0.cia-opmode-display
+
+net y-statusword      lcec.0.A6Y.y-status-word       => cia402.1.statusword 
+net y-drv-act-pos     lcec.0.A6Y.y-pos-actual        => cia402.1.drv-actual-position
+
+net z-statusword      lcec.0.A6Z.z-status-word       => cia402.2.statusword
+net z-drv-act-pos     lcec.0.A6Z.z-pos-actual        => cia402.2.drv-actual-position 
+
+# CIA402 driver to EtherCAT mapping
+net x-controlword         cia402.0.controlword            => lcec.0.A6X.x-control-word
+net x-drv-target-pos      cia402.0.drv-target-position    => lcec.0.A6X.x-target-position
+net x-mode-of-operation   cia402.0.opmode                 => lcec.0.A6X.control-mode  
+
+net y-controlword         cia402.1.controlword            => lcec.0.A6Y.y-control-word
+net y-drv-target-pos      cia402.1.drv-target-position    => lcec.0.A6Y.y-target-position
+
+net z-controlword         cia402.2.controlword            => lcec.0.A6Z.z-control-word
+net z-drv-target-pos      cia402.2.drv-target-position    => lcec.0.A6Z.z-target-position
+
+# Homing
+
+# CIA Custom Homing
+setp joint.0.is-custom-homing [JOINT_0]CIA402_HOMING_ENABLED
+setp lcec.0.A6X.x-homing-method [JOINT_0]CIA402_HOMING_METHOD
+setp lcec.0.A6X.homing-high-velocity [JOINT_0]CIA402_HOMING_SEARCH_VELOCITY
+setp lcec.0.A6X.homing-low-velocity [JOINT_0]CIA402_HOMING_LATCH_VELOCITY
+setp lcec.0.A6X.homing-acceleration [JOINT_0]CIA402_HOMING_ACCELERATION
+# trigger homing for joint
+net x-home-request         joint.0.request-custom-homing     <=         cia402.0.home => joint.0.cia-home
+
+
+
