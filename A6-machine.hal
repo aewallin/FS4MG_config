@@ -101,7 +101,9 @@ setp lcec.0.A6X.homing-high-velocity [JOINT_0]CIA402_HOMING_SEARCH_VELOCITY
 setp lcec.0.A6X.homing-low-velocity [JOINT_0]CIA402_HOMING_LATCH_VELOCITY
 setp lcec.0.A6X.homing-acceleration [JOINT_0]CIA402_HOMING_ACCELERATION
 # trigger homing for joint
-net x-home-request         joint.0.request-custom-homing     <=         cia402.0.home => joint.0.cia-home
+net x-home-request         joint.0.request-custom-homing     <=         cia402.0.home 
+net x-homed joint.0.custom-homing-finished <= cia402.0.stat-homed
+
 
 
 
