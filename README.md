@@ -5,6 +5,7 @@ Linuxcnc configuration for my 3-axis mill.
 * Linuxcnc on Lenovo M720q (i5-8400T, 16 GiB RAM)
 * FS4MG frame (https://www.cnc-technik-mueller.de/fs4mg/)
 * Stepperonline A6-EC servodrives with 400W servos and 17-bit encoders.
+    * PWM frequency set to 16 kHz as explained in [motion4sim](https://docs.motion4sim.com/hardware/servo-driver-settings/ethercat/ethercat-drive-support-omc-a6-series)
 * Beckhoff IO, EL2809, EL1809
 * spindle config TBD
 
