@@ -8,7 +8,15 @@ Linuxcnc configuration for my 3-axis mill.
 * Beckhoff IO, EL2809, EL1809
 * spindle config TBD
 
-## linuxcnc install
+## Updates
+
+* WIP: homign using [cia402_homecomp](https://github.com/rodw-au/cia402_homecomp)
+    * state-machine starts HOME_START
+    * joint 0 amplifier fault (drive display Er87.1  "One-time excessive position reference increment")
+* Servo tuning using 'servo-tune.py' from [biber-ethercat](https://github.com/shulter/biber-ethercat) works. (alternatively over USB-cable to drive and Windows software)
+* jogging all axes from AXIS and jogwheel works
+
+## Linuxcnc install
 
 * 6.12.107+deb13-rt-amd64 #1 SMP PREEMPT_RT Debian 6.12.107-1 (2026-08-29) x86_64 GNU/Linux
 * linuxcnc 2.9.10 from ISO file
