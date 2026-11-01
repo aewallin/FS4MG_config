@@ -40,12 +40,10 @@ net ext-estop-signal  =>  iocontrol.0.emc-enable-in <= lcec.0.3.din-0
 setp cia402.0.csp-mode 1
 setp cia402.1.csp-mode 1
 setp cia402.2.csp-mode 1
-# pos-scale = (encoder counts per revolution)  /  (units per revolution)
-# 17-bit encoder counts per rev pow(2, 17)= 131072
-# with 5mm/rev ballscrew set 26214.4
-setp cia402.0.pos-scale 26214.4
-setp cia402.1.pos-scale 26214.4
-setp cia402.2.pos-scale 26214.4
+
+setp cia402.0.pos-scale [JOINT_0]POS_SCALE
+setp cia402.1.pos-scale [JOINT_0]POS_SCALE
+setp cia402.2.pos-scale [JOINT_0]POS_SCALE
 
 setp joint.0.jog-accel-fraction 0.3
 setp joint.1.jog-accel-fraction 0.5
@@ -65,7 +63,7 @@ net j0-homing-error  cia402.0.stat-homing-error => joint.0.cia-stat-homing-error
 net j0-drive-fault   cia402.0.stat-fault      => joint.0.cia-stat-fault
 net j0-op-enabled    cia402.0.stat-op-enabled => joint.0.cia-stat-op-enabled
 setp joint.0.request-custom-homing 1
-setp joint.0.cia-timeout-ms 30000
+setp joint.0.cia-timeout-ms 60000
 setp lcec.0.A6X.homing-method [JOINT_0]CIA402_HOMING_METHOD
 setp lcec.0.A6X.homing-high-velocity [JOINT_0]CIA402_HOMING_SEARCH_VELOCITY
 setp lcec.0.A6X.homing-low-velocity [JOINT_0]CIA402_HOMING_LATCH_VELOCITY
@@ -95,7 +93,7 @@ net j1-homing-error  cia402.1.stat-homing-error => joint.1.cia-stat-homing-error
 net j1-drive-fault   cia402.1.stat-fault      => joint.1.cia-stat-fault
 net j1-op-enabled    cia402.1.stat-op-enabled => joint.1.cia-stat-op-enabled
 setp joint.1.request-custom-homing 1
-setp joint.1.cia-timeout-ms 30000
+setp joint.1.cia-timeout-ms 60000
 setp lcec.0.A6Y.homing-method [JOINT_1]CIA402_HOMING_METHOD
 setp lcec.0.A6Y.homing-high-velocity [JOINT_1]CIA402_HOMING_SEARCH_VELOCITY
 setp lcec.0.A6Y.homing-low-velocity [JOINT_1]CIA402_HOMING_LATCH_VELOCITY
@@ -126,7 +124,7 @@ net j2-homing-error  cia402.2.stat-homing-error => joint.2.cia-stat-homing-error
 net j2-drive-fault   cia402.2.stat-fault      => joint.2.cia-stat-fault
 net j2-op-enabled    cia402.2.stat-op-enabled => joint.2.cia-stat-op-enabled
 setp joint.2.request-custom-homing 1
-setp joint.2.cia-timeout-ms 30000
+setp joint.2.cia-timeout-ms 60000
 setp lcec.0.A6Z.homing-method [JOINT_2]CIA402_HOMING_METHOD
 setp lcec.0.A6Z.homing-high-velocity [JOINT_2]CIA402_HOMING_SEARCH_VELOCITY
 setp lcec.0.A6Z.homing-low-velocity [JOINT_2]CIA402_HOMING_LATCH_VELOCITY
