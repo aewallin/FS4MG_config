@@ -18,6 +18,11 @@ Linuxcnc configuration for my 3-axis mill.
     * we get to CUSTOM_RUNNING
     * Then: joint 0 amplifier fault (drive display Er87.1  "One-time excessive position reference increment")
 * Servo tuning using 'servo-tune.py' from [biber-ethercat](https://github.com/shulter/biber-ethercat) works. (alternatively over USB-cable to drive and Windows software)
+    * save tuned values to EEPROM with: (the -p argument is the ethercat slave number for the drive)
+    * `ethercat download -p 5 0x1010 1 0x73617665 --type uint32`
+    * `ethercat download -p 6 0x1010 1 0x73617665 --type uint32`
+    * `ethercat download -p 7 0x1010 1 0x73617665 --type uint32`
+
 * jogging all axes from AXIS and jogwheel works
 
 ## Linuxcnc install

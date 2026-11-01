@@ -13,14 +13,14 @@ setp t_scale_x.gain 0.1
 setp t_scale_y.gain 0.1
 setp t_scale_z.gain 0.1
 
-net x-torque-raw lcec.0.A6X.x-tor-actual => t2f_x.in 
+net x-torque-raw lcec.0.A6X.tor-actual => t2f_x.in 
 net x-torque-rawf t2f_x.out => t_scale_x.in
 net x-torque-scaled t_scale_x.out => pyvcp.x-motor-torque
 
-net y-torque-raw lcec.0.A6Y.y-tor-actual => t2f_y.in 
+net y-torque-raw lcec.0.A6Y.tor-actual => t2f_y.in 
 net y-torque-rawf t2f_y.out => t_scale_y.in
 net y-torque-scaled t_scale_y.out => pyvcp.y-motor-torque
 
-net z-torque-raw lcec.0.A6Z.z-tor-actual => t2f_z.in 
+net z-torque-raw lcec.0.A6Z.tor-actual => t2f_z.in 
 net z-torque-rawf t2f_z.out => t_scale_z.in
 net z-torque-scaled t_scale_z.out => pyvcp.z-motor-torque
