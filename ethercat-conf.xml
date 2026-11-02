@@ -35,7 +35,8 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="tor-actual" halType="s32"/>
 				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="touch-probe-1" halType="s32"/>
 				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="touch-probe-2" halType="s32"/>
-				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/>
+				<!-- <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/> -->
+                <pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="di-status" halType="u32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="fault-code" halType="s32"/>
 				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
 			</pdo>
@@ -71,7 +72,8 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="tor-actual" halType="s32"/>
 				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="touch-probe-1" halType="s32"/>
 				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="touch-probe-2" halType="s32"/>
-				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/>
+				<!-- <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/> -->
+                <pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="di-status" halType="u32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="fault-code" halType="s32"/>
 				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
 			</pdo>
@@ -105,7 +107,8 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="tor-actual" halType="s32"/>
 				<pdoEntry idx="60BA" subIdx="00" bitLen="32" halPin="touch-probe-1" halType="s32"/>
 				<pdoEntry idx="60BC" subIdx="00" bitLen="32" halPin="touch-probe-2" halType="s32"/>
-				<pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/>
+				<!-- <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/> -->
+                <pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="di-status" halType="u32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="fault-code" halType="s32"/>
 				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
 			</pdo>

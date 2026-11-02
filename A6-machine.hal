@@ -13,7 +13,10 @@ loadusr -W lcec_conf ethercat-conf.xml
 # Load EtherCAT and CIA402 drivers
 loadrt lcec
 loadrt cia402 count=3
-
+# for decoding drive digital inputs
+loadrt bitslice count=3 personality=20,20,20
+# for ORing together 3D probe and toolsetter
+loadrt logic count=1 personality=0x204
 
 
 # Add EtherCAT and motion processing functions to the servo thread
@@ -23,6 +26,10 @@ addf    cia402.1.read-all        servo-thread
 addf    cia402.2.read-all        servo-thread
 addf    motion-command-handler   servo-thread
 addf    motion-controller        servo-thread
+addf    bitslice.0 servo-thread
+addf    bitslice.1 servo-thread
+addf    bitslice.2 servo-thread
+addf    logic.0 servo-thread
 addf    cia402.0.write-all       servo-thread
 addf    cia402.1.write-all       servo-thread
 addf    cia402.2.write-all       servo-thread
@@ -53,8 +60,8 @@ setp joint.2.jog-accel-fraction 0.5
 net x-enable-cmd     joint.0.amp-enable-out   => joint.0.cia-enable-in
 net x-enable         joint.0.cia-enable-out   => cia402.0.enable
 net x-amp-fault      joint.0.amp-fault-in     <= cia402.0.drv-fault
-net x-pos-cmd        joint.0.motor-pos-cmd    => cia402.0.pos-cmd => joint.0.cia-pos-cmd
-net x-vel-cmd        joint.0.vel-cmd          => cia402.0.velocity-cmd   joint.0.cia-velocity-cmd
+net x-pos-cmd        joint.0.motor-pos-cmd    => cia402.0.pos-cmd          => joint.0.cia-pos-cmd
+net x-vel-cmd        joint.0.vel-cmd          => cia402.0.velocity-cmd     => joint.0.cia-velocity-cmd
 net j0-act-pos       cia402.0.pos-fb          => joint.0.cia-pos-fb-in
 net j0-feedback      joint.0.cia-pos-fb-out   => joint.0.motor-pos-fb
 net j0-home          joint.0.cia-home         => cia402.0.home
@@ -78,7 +85,10 @@ net x-statusword      lcec.0.A6X.status-word       => cia402.0.statusword
 net x-drv-act-mode    lcec.0.A6X.mode-display      => cia402.0.opmode-display => joint.0.cia-opmode-display
 net x-drv-act-pos     lcec.0.A6X.pos-actual        => cia402.0.drv-actual-position 
 net x-drv-act-vel     lcec.0.A6X.vel-actual        => cia402.0.drv-actual-velocity 
-
+net x-drv-di          lcec.0.A6X.di-status         => bitslice.0.in
+net x-di4             bitslice.0.out-18
+# 3D wireless probe connected to DI5
+net x-di5             bitslice.0.out-19
 
 # Motion signal mappings for axis Y
 net y-enable-cmd     joint.1.amp-enable-out   => joint.1.cia-enable-in
@@ -109,7 +119,10 @@ net y-statusword      lcec.0.A6Y.status-word       => cia402.1.statusword
 net y-drv-act-mode    lcec.0.A6Y.mode-display      => cia402.1.opmode-display => joint.1.cia-opmode-display
 net y-drv-act-pos     lcec.0.A6Y.pos-actual        => cia402.1.drv-actual-position 
 net y-drv-act-vel     lcec.0.A6Y.vel-actual        => cia402.1.drv-actual-velocity 
-
+net y-drv-di          lcec.0.A6Y.di-status         => bitslice.1.in
+net y-di4             bitslice.1.out-18
+# 3D wireless probe connected to DI5
+net y-di5             bitslice.1.out-19
 
 
 # Motion signal mappings for axis Z
@@ -141,7 +154,16 @@ net z-statusword      lcec.0.A6Z.status-word       => cia402.2.statusword
 net z-drv-act-mode    lcec.0.A6Z.mode-display      => cia402.2.opmode-display => joint.2.cia-opmode-display
 net z-drv-act-pos     lcec.0.A6Z.pos-actual        => cia402.2.drv-actual-position 
 net z-drv-act-vel     lcec.0.A6Z.vel-actual        => cia402.2.drv-actual-velocity 
+net z-drv-di          lcec.0.A6Z.di-status         => bitslice.2.in
+net z-di4             bitslice.2.out-18
+# 3D wireless probe connected to DI5
+net z-di5             bitslice.2.out-19
 
+# OR together probes
+net x-di5 logic.0.in-00
+net y-di5 logic.0.in-01
+net z-di5 logic.0.in-02
+net motion-probe logic.0.or => motion.probe-input
 
 
 
