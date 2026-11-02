@@ -50,7 +50,8 @@ setp joint.1.jog-accel-fraction 0.5
 setp joint.2.jog-accel-fraction 0.5
 
 # Motion signal mappings for axis X
-net x-enable         joint.0.amp-enable-out   => cia402.0.enable => joint.0.cia-enable-in
+net x-enable-cmd     joint.0.amp-enable-out   => joint.0.cia-enable-in
+net x-enable         joint.0.cia-enable-out   => cia402.0.enable
 net x-amp-fault      joint.0.amp-fault-in     <= cia402.0.drv-fault
 net x-pos-cmd        joint.0.motor-pos-cmd    => cia402.0.pos-cmd => joint.0.cia-pos-cmd
 net x-vel-cmd        joint.0.vel-cmd          => cia402.0.velocity-cmd   joint.0.cia-velocity-cmd
@@ -80,7 +81,8 @@ net x-drv-act-vel     lcec.0.A6X.vel-actual        => cia402.0.drv-actual-veloci
 
 
 # Motion signal mappings for axis Y
-net y-enable         joint.1.amp-enable-out   => cia402.1.enable => joint.1.cia-enable-in
+net y-enable-cmd     joint.1.amp-enable-out   => joint.1.cia-enable-in
+net y-enable         joint.1.cia-enable-out   => cia402.1.enable
 net y-amp-fault      joint.1.amp-fault-in     <= cia402.1.drv-fault
 net y-pos-cmd        joint.1.motor-pos-cmd    => cia402.1.pos-cmd => joint.1.cia-pos-cmd
 net y-vel-cmd        joint.1.vel-cmd          => cia402.1.velocity-cmd   joint.1.cia-velocity-cmd
@@ -111,7 +113,8 @@ net y-drv-act-vel     lcec.0.A6Y.vel-actual        => cia402.1.drv-actual-veloci
 
 
 # Motion signal mappings for axis Z
-net z-enable         joint.2.amp-enable-out   => cia402.2.enable => joint.2.cia-enable-in
+net z-enable-cmd     joint.2.amp-enable-out   => joint.2.cia-enable-in
+net z-enable         joint.2.cia-enable-out   => cia402.2.enable
 net z-amp-fault      joint.2.amp-fault-in     <= cia402.2.drv-fault
 net z-pos-cmd        joint.2.motor-pos-cmd    => cia402.2.pos-cmd => joint.2.cia-pos-cmd
 net z-vel-cmd        joint.2.vel-cmd          => cia402.2.velocity-cmd   joint.2.cia-velocity-cmd
