@@ -3,26 +3,30 @@
 Linuxcnc configuration for my 3-axis mill.
 
 * Linuxcnc on Lenovo M720q (i5-8400T, 16 GiB RAM)
-* FS4MG frame (https://www.cnc-technik-mueller.de/fs4mg/)
+* [FS4MG](https://www.cnc-technik-mueller.de/fs4mg/) fixed gantry frame, travels X 330 mm, Y 270 mm, Z 170 mm
 * Stepperonline A6-EC servodrives with 400W servos and 17-bit encoders.
+    * with 5 mm pitch ballscrews, 26214.4 counts/mm or 0.038 um/count
+    * Z motor has brake
     * PWM frequency set to 16 kHz as explained in [motion4sim](https://docs.motion4sim.com/hardware/servo-driver-settings/ethercat/ethercat-drive-support-omc-a6-series)
-* Beckhoff IO, EL2809, EL1809
-* spindle config TBD
+    * nominal 3000 rpm gives 15 m/min rapids (way faster than needed)
+* Beckhoff IO
+    * Outputs EL2809
+    * Inputs EL1809
+* Omron 3G3MX2-A4030-E VFD with 3G3AX-MX2-ECT Ethercat module
+    * Spinogy X22 spindle, 3 kW, 400 V, 4-pole, 30 krpm, air-cooled, with HSKC32 taper. 
+* Omron G9SA safety-relay with 3-phase contactor for servos and spindle.
+* Toolsetter (Z-axis) from [scratchbuilt-designs](https://www.instagram.com/scratchbuilt_designs/)
+* GP-800 wireless 3D probe
+* LHB04B-6 USB-wired jogwheel with [xhc-whb04b-6](https://linuxcnc.org/docs/stable/html/man/man1/xhc-whb04b-6.1.html)
 
 ## Updates
 
-* WIP: homign using [cia402_homecomp](https://github.com/rodw-au/cia402_homecomp)
-    * state-machine starts HOME_START
-    * we get to CUSTOM_BEGIN
-    * we get to CUSTOM_INIT
-    * we get to CUSTOM_RUNNING
-    * Then: joint 0 amplifier fault (drive display Er87.1  "One-time excessive position reference increment")
+* 2026-11 Ethercat homing-in-the-drive now works with [cia402_homecomp](https://github.com/linuxcnc-ethercat/cia402_homecomp)
 * Servo tuning using 'servo-tune.py' from [biber-ethercat](https://github.com/shulter/biber-ethercat) works. (alternatively over USB-cable to drive and Windows software)
     * save tuned values to EEPROM with: (the -p argument is the ethercat slave number for the drive)
     * `ethercat download -p 5 0x1010 1 0x73617665 --type uint32`
     * `ethercat download -p 6 0x1010 1 0x73617665 --type uint32`
     * `ethercat download -p 7 0x1010 1 0x73617665 --type uint32`
-
 * jogging all axes from AXIS and jogwheel works
 
 ## Linuxcnc install
