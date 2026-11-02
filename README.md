@@ -22,6 +22,7 @@ Linuxcnc configuration for my 3-axis mill.
 ## Updates
 
 * 2026-11 Ethercat homing-in-the-drive now works with [cia402_homecomp](https://github.com/linuxcnc-ethercat/cia402_homecomp)
+    * 2026-11-02 experimental deb-packages `cia402-homecomp_0.1.0~test2+linuxcnc2.9.10_amd64.deb` and `linuxcnc-ethercat_1.48.0-1-g6654f39+ci_debian-13_amd64.deb`
 * Servo tuning using 'servo-tune.py' from [biber-ethercat](https://github.com/shulter/biber-ethercat) works. (alternatively over USB-cable to drive and Windows software)
     * save tuned values to EEPROM with: (the -p argument is the ethercat slave number for the drive)
     * `ethercat download -p 5 0x1010 1 0x73617665 --type uint32`
