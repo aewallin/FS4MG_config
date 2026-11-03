@@ -9,7 +9,8 @@ ethercat config from https://github.com/aewallin/FS4MG_config
     <slave idx="3" type="EL1809" />
     <slave idx="4" type="EL1809" />
 	<slave idx="5" type="generic" vid="00400000" pid="00000715" configPdos="true" name="A6X">
-		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="25000"/>
+        <!-- using sync0Shift="250000" reduced following error seen by linuxcnc to around 1.75 servo-periods -->
+		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="250000"/>
 		<watchdog divider="2498" intervals="1000"/>
 		
 		<syncManager idx="2" dir="out">
@@ -38,7 +39,8 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 				<!-- <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/> -->
                 <pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="di-status" halType="u32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="fault-code" halType="s32"/>
-				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
+                <!-- 17 bit encoders, 5 mm/rev ballscres, 26214.4 counts/mm, 3.8147e-5 mm/count -->
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="float" scale="3.8147e-05"/>
 			</pdo>
 
 		</syncManager>
@@ -46,7 +48,7 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 	
 	
 	<slave idx="6" type="generic" vid="00400000" pid="00000715" configPdos="true" name="A6Y">
-		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="25000"/>
+		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="250000"/>
 		<watchdog divider="2498" intervals="1000"/>
 
 		<syncManager idx="2" dir="out">
@@ -75,14 +77,15 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 				<!-- <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/> -->
                 <pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="di-status" halType="u32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="fault-code" halType="s32"/>
-				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
+                <!-- 17 bit encoders, 5 mm/rev ballscres, 26214.4 counts/mm, 3.8147e-5 mm/count -->
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="float" scale="3.8147e-05"/>
 			</pdo>
 		</syncManager>
 	</slave>
 	
 	
 	<slave idx="7" type="generic" vid="00400000" pid="00000715" configPdos="true" name="A6Z">
-		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="25000"/>
+		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="250000"/>
 		<watchdog divider="2498" intervals="1000"/>
 		<syncManager idx="2" dir="out">
 			<pdo idx="1600">
@@ -110,7 +113,8 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 				<!-- <pdoEntry idx="60B9" subIdx="00" bitLen="16" halPin="touch-probe-status" halType="s32"/> -->
                 <pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="di-status" halType="u32"/>
 				<pdoEntry idx="603F" subIdx="00" bitLen="16" halPin="fault-code" halType="s32"/>
-				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="s32"/>
+                <!-- 17 bit encoders, 5 mm/rev ballscres, 26214.4 counts/mm, 3.8147e-5 mm/count -->
+				<pdoEntry idx="60F4" subIdx="00" bitLen="32" halPin="following-error" halType="float" scale="3.8147e-05"/>
 			</pdo>
 		</syncManager>
 	</slave>
