@@ -1,7 +1,7 @@
 # -----------------------------
 # EtherCAT and Motion Config
 # -----------------------------
-
+# from https://github.com/aewallin/FS4MG_config
 
 # Load kinematics and motion modules
 loadrt [KINS]KINEMATICS
@@ -17,7 +17,8 @@ loadrt cia402 count=3
 loadrt bitslice count=3 personality=21,21,21
 # for ORing together 3D probe and toolsetter
 loadrt logic count=1 personality=0x204
-
+# spindle speed conv
+loadrt conv_float_s32 count=1
 
 # Add EtherCAT and motion processing functions to the servo thread
 addf    lcec.read-all            servo-thread
@@ -30,6 +31,7 @@ addf    bitslice.0 servo-thread
 addf    bitslice.1 servo-thread
 addf    bitslice.2 servo-thread
 addf    logic.0 servo-thread
+addf    conv-float-s32.0 servo-thread
 addf    cia402.0.write-all       servo-thread
 addf    cia402.1.write-all       servo-thread
 addf    cia402.2.write-all       servo-thread
@@ -56,7 +58,9 @@ setp joint.0.jog-accel-fraction 0.3
 setp joint.1.jog-accel-fraction 0.5
 setp joint.2.jog-accel-fraction 0.5
 
+#***********************************
 # Motion signal mappings for axis X
+#***********************************
 net x-enable-cmd     joint.0.amp-enable-out   => joint.0.cia-enable-in
 net x-enable         joint.0.cia-enable-out   => cia402.0.enable
 net x-amp-fault      joint.0.amp-fault-in     <= cia402.0.drv-fault
@@ -90,7 +94,9 @@ net x-di4             bitslice.0.out-19
 # 3D wireless probe connected to DI5
 net x-di5             bitslice.0.out-20
 
+#***********************************
 # Motion signal mappings for axis Y
+#***********************************
 net y-enable-cmd     joint.1.amp-enable-out   => joint.1.cia-enable-in
 net y-enable         joint.1.cia-enable-out   => cia402.1.enable
 net y-amp-fault      joint.1.amp-fault-in     <= cia402.1.drv-fault
@@ -105,7 +111,7 @@ net j1-homing-error  cia402.1.stat-homing-error => joint.1.cia-stat-homing-error
 net j1-drive-fault   cia402.1.stat-fault      => joint.1.cia-stat-fault
 net j1-op-enabled    cia402.1.stat-op-enabled => joint.1.cia-stat-op-enabled
 setp joint.1.request-custom-homing 1
-setp joint.1.cia-timeout-ms 60000
+setp joint.1.cia-timeout-ms 30000
 setp lcec.0.A6Y.homing-method [JOINT_1]CIA402_HOMING_METHOD
 setp lcec.0.A6Y.homing-high-velocity [JOINT_1]CIA402_HOMING_SEARCH_VELOCITY
 setp lcec.0.A6Y.homing-low-velocity [JOINT_1]CIA402_HOMING_LATCH_VELOCITY
@@ -124,8 +130,9 @@ net y-di4             bitslice.1.out-19
 # 3D wireless probe connected to DI5
 net y-di5             bitslice.1.out-20
 
-
+#***********************************
 # Motion signal mappings for axis Z
+#***********************************
 net z-enable-cmd     joint.2.amp-enable-out   => joint.2.cia-enable-in
 net z-enable         joint.2.cia-enable-out   => cia402.2.enable
 net z-amp-fault      joint.2.amp-fault-in     <= cia402.2.drv-fault
@@ -159,6 +166,9 @@ net z-di4             bitslice.2.out-19
 # 3D wireless probe connected to DI5
 net z-di5             bitslice.2.out-20
 
+#*******************
+# PROBE
+#*******************
 # OR together probes
 # 3D probe is x-di4
 # toolsetter is x-di5
@@ -167,6 +177,13 @@ net x-di5 logic.0.in-01
 net motion-probe logic.0.or => motion.probe-input
 
 
+#*******************
+#  ETHERCAT SPINDLE 
+#*******************
 
+# lcec.0.3G3AX-MX2-ECT.srv-cia-controlword
+#  OFF: 10
+#   ON: 15
 
-
+net spindlespeed spindle.0.speed-out conv-float-s32.0.in  
+net speed_out conv-float-s32.0.out lcec.0.MX2.srv-target-vl

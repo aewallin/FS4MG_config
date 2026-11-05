@@ -2,13 +2,15 @@
 ethercat config from https://github.com/aewallin/FS4MG_config
 -->
 <masters>
-<master idx="0" appTimePeriod="1000000" refClockSyncCycles="1">
+<master idx="0" appTimePeriod="1000000" refClockSyncCycles="-1">
     <slave idx="0" type="EK1100"/>
     <slave idx="1" type="EL2809" />
     <slave idx="2" type="EL2809" />
     <slave idx="3" type="EL1809" />
     <slave idx="4" type="EL1809" />
 	<slave idx="5" type="generic" vid="00400000" pid="00000715" configPdos="true" name="A6X">
+        <!-- Stepperonline A6 drive -->
+        <!-- AS715N_sAxis_V0.10-->
         <!-- using sync0Shift="250000" reduced following error seen by linuxcnc to around 1.75 servo-periods -->
 		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="250000"/>
 		<watchdog divider="2498" intervals="1000"/>
@@ -118,5 +120,8 @@ ethercat config from https://github.com/aewallin/FS4MG_config
 			</pdo>
 		</syncManager>
 	</slave>
+    <slave idx="8" type="OMMX2" name="MX2">
+        <!-- 3G3AX-MX2-ECT EtherCAT Communication Unit for 3G3MX2 -->
+    </slave>
 </master>
 </masters>

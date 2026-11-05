@@ -3,8 +3,10 @@
 Linuxcnc configuration for my 3-axis mill.
 
 * Linuxcnc on Lenovo M720q (i5-8400T, 16 GiB RAM)
+    * [linuxcnc-ethercat](https://linuxcnc-ethercat.github.io/linuxcnc-ethercat/)
 * [FS4MG](https://www.cnc-technik-mueller.de/fs4mg/) fixed gantry frame, travels X 330 mm, Y 270 mm, Z 170 mm
 * Stepperonline A6-EC servodrives with 400W servos and 17-bit encoders.
+    * [cia402](https://linuxcnc-ethercat.github.io/linuxcnc-ethercat/cia402.html)
     * with 5 mm pitch ballscrews, 26214.4 counts/mm or 0.038 um/count
     * Z motor has brake
     * PWM frequency set to 16 kHz as explained in [motion4sim](https://docs.motion4sim.com/hardware/servo-driver-settings/ethercat/ethercat-drive-support-omc-a6-series)
@@ -13,7 +15,10 @@ Linuxcnc configuration for my 3-axis mill.
     * Outputs EL2809
     * Inputs EL1809
 * Omron 3G3MX2-A4030-E VFD with 3G3AX-MX2-ECT Ethercat module
+    * [ommx2](https://linuxcnc-ethercat.github.io/linuxcnc-ethercat/ommx2.html)
     * Spinogy X22 spindle, 3 kW, 400 V, 4-pole, 30 krpm, air-cooled, with HSKC32 taper. 
+    * Nominal 400 Hz, max 1000 Hz, max current 6A
+    * VFD limited to 580 Hz giving max RPM 17400.
 * Omron G9SA safety-relay with 3-phase contactor for servos and spindle.
 * Toolsetter (Z-axis) from [scratchbuilt-designs](https://www.instagram.com/scratchbuilt_designs/)
 * GP-800 wireless 3D probe
@@ -22,6 +27,7 @@ Linuxcnc configuration for my 3-axis mill.
 ## Updates
 
 * 2026-11 Ethercat homing-in-the-drive now works with [cia402_homecomp](https://github.com/linuxcnc-ethercat/cia402_homecomp)
+    * 2026-11-04 `linuxcnc-ethercat_1.48.0-3-gaafe953+ci_debian-13_amd64.deb` and `cia402-homecomp_0.1.0~test3+linuxcnc2.9.10_amd64.deb`
     * 2026-11-02 experimental deb-packages `cia402-homecomp_0.1.0~test2+linuxcnc2.9.10_amd64.deb` and `linuxcnc-ethercat_1.48.0-1-g6654f39+ci_debian-13_amd64.deb`
 * Servo tuning using 'servo-tune.py' from [biber-ethercat](https://github.com/shulter/biber-ethercat) works. (alternatively over USB-cable to drive and Windows software)
     * save tuned values to EEPROM with: (the -p argument is the ethercat slave number for the drive)
