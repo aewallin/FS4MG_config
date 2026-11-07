@@ -30,7 +30,7 @@ Linuxcnc configuration for my 3-axis mill.
 
 ## Updates
 
-* toolsetter wired to motion.probe-input. toolsetter repeatability test.
+* 2026-11-07 toolsetter wired to motion.probe-input. toolsetter repeatability test, see [probing](https://github.com/aewallin/FS4MG_config/blob/main/probing/probing.md)
 * spindle control both fwd and rev seems to work. tested up to 17 krpm.
 * 2026-11 Ethercat homing-in-the-drive now works with [cia402_homecomp](https://github.com/linuxcnc-ethercat/cia402_homecomp)
     * 2026-11-04 `linuxcnc-ethercat_1.48.0-3-gaafe953+ci_debian-13_amd64.deb` and `cia402-homecomp_0.1.0~test3+linuxcnc2.9.10_amd64.deb`
