@@ -30,7 +30,8 @@ Linuxcnc configuration for my 3-axis mill.
 
 ## Updates
 
-* spindle control both fwd and rev seems to work
+* toolsetter wired to motion.probe-input. toolsetter repeatability test.
+* spindle control both fwd and rev seems to work. tested up to 17 krpm.
 * 2026-11 Ethercat homing-in-the-drive now works with [cia402_homecomp](https://github.com/linuxcnc-ethercat/cia402_homecomp)
     * 2026-11-04 `linuxcnc-ethercat_1.48.0-3-gaafe953+ci_debian-13_amd64.deb` and `cia402-homecomp_0.1.0~test3+linuxcnc2.9.10_amd64.deb`
     * 2026-11-02 experimental deb-packages `cia402-homecomp_0.1.0~test2+linuxcnc2.9.10_amd64.deb` and `linuxcnc-ethercat_1.48.0-1-g6654f39+ci_debian-13_amd64.deb`
@@ -65,3 +66,26 @@ $ ethercat slaves
 7  0:7  OP     +  AS715N_sAxis_V0.10
 8  0:8  PREOP  +  3G3AX-MX2-ECT EtherCAT Communication Unit for 3G3MX2
 ```
+
+## Omron MX2 parameters
+
+<pre>
+Parameter   Name                Setting
+A001        Frequency source    04 Option (i.e. Ethercat option module)
+A002        Command source      04 Option
+A003        Base frequency      400 Hz
+A004        Max frequency       580 Hz
+A044        V/f curve           00 constant troque
+A051        DC braking          01 ON
+B012        rated current       7.2 A (spindle plate)  
+B090        regen usage rate    5%
+B095        regen enable        01 RUN-ON
+B097        regen resistor      120 Ohm
+F002        Acc time            10 s
+F003        Dec time            20 s
+H003        Motor kW            3.0 kW
+H004        Motor poles         4
+C005        multi-f inp         19 PTC-thermistor
+C085        thermistor adj      100%
+
+</pre>
