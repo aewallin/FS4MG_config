@@ -2,7 +2,7 @@
 # connect motor torque from lcec to pyvcp panel
 # for pyvcp panel
 loadrt scale names=t_scale_x,t_scale_y,t_scale_z
-loadrt conv_s32_float names=t2f_x,t2f_y,t2f_z
+# loadrt conv_s32_float names=t2f_x,t2f_y,t2f_z
 addf t2f_x servo-thread
 addf t2f_y servo-thread
 addf t2f_z servo-thread

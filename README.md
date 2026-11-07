@@ -11,14 +11,18 @@ Linuxcnc configuration for my 3-axis mill.
     * Z motor has brake
     * PWM frequency set to 16 kHz as explained in [motion4sim](https://docs.motion4sim.com/hardware/servo-driver-settings/ethercat/ethercat-drive-support-omc-a6-series)
     * nominal 3000 rpm gives 15 m/min rapids (way faster than needed)
-* Beckhoff IO
-    * Outputs EL2809
-    * Inputs EL1809
+* Beckhoff EK1100 IO
+    * Outputs 2pcs EL2809 ( `lcec.0.1` and `lcec.0.2`)
+        * `lcec.0.1.dout-0`: control +24VDC via relay for spindle cooling fan
+    * Inputs 2pcs EL1809 ( `lcec.0.3` and `lcec.0.4`)
+        * `lcec.0.3.din-0` external e-stop signal from safety-relay, wired to `iocontrol.0.emc-enable-in`
 * Omron 3G3MX2-A4030-E VFD with 3G3AX-MX2-ECT Ethercat module
-    * [ommx2](https://linuxcnc-ethercat.github.io/linuxcnc-ethercat/ommx2.html)
-    * Spinogy X22 spindle, 3 kW, 400 V, 4-pole, 30 krpm, air-cooled, with HSKC32 taper. 
+    * [ommx2](https://linuxcnc-ethercat.github.io/linuxcnc-ethercat/ommx2.html), see [#414](https://github.com/linuxcnc-ethercat/linuxcnc-ethercat/issues/414) and [forum post](https://forum.linuxcnc.org/ethercat/56600-omron-mx2#331642)
     * Nominal 400 Hz, max 1000 Hz, max current 6A
     * VFD limited to 580 Hz giving max RPM 17400.
+* Spinogy X22 spindle, 3 kW, 400 V, 4-pole, 30 krpm, air-cooled, with HSKC32 taper.
+    * pin7 GND cooling fan
+    * pin8 +24VDC cooling fan (control via relay)
 * Omron G9SA safety-relay with 3-phase contactor for servos and spindle.
 * Toolsetter (Z-axis) from [scratchbuilt-designs](https://www.instagram.com/scratchbuilt_designs/)
 * GP-800 wireless 3D probe
@@ -26,6 +30,7 @@ Linuxcnc configuration for my 3-axis mill.
 
 ## Updates
 
+* spindle control both fwd and rev seems to work
 * 2026-11 Ethercat homing-in-the-drive now works with [cia402_homecomp](https://github.com/linuxcnc-ethercat/cia402_homecomp)
     * 2026-11-04 `linuxcnc-ethercat_1.48.0-3-gaafe953+ci_debian-13_amd64.deb` and `cia402-homecomp_0.1.0~test3+linuxcnc2.9.10_amd64.deb`
     * 2026-11-02 experimental deb-packages `cia402-homecomp_0.1.0~test2+linuxcnc2.9.10_amd64.deb` and `linuxcnc-ethercat_1.48.0-1-g6654f39+ci_debian-13_amd64.deb`

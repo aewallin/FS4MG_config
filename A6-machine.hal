@@ -17,25 +17,38 @@ loadrt cia402 count=3
 loadrt bitslice count=3 personality=21,21,21
 # for ORing together 3D probe and toolsetter
 loadrt logic count=1 personality=0x204
-# spindle speed conv
+# spindle speed conv to s32 for ethercat
 loadrt conv_float_s32 count=1
+# s32 from ethercat converted to float for linuxcnc
+# spindle rpm, torque for x, y, z
+loadrt conv_s32_float names=spindle_s32_float,t2f_x,t2f_y,t2f_z
+
+# spindle mux2 for controlword
+loadrt mux2 names=mux2.spindle-enable 
+loadrt conv_float_u32 count=1
+# spind at speed?
+loadrt near names=spindlenear
 
 # Add EtherCAT and motion processing functions to the servo thread
-addf    lcec.read-all            servo-thread
-addf    cia402.0.read-all        servo-thread
-addf    cia402.1.read-all        servo-thread
-addf    cia402.2.read-all        servo-thread
-addf    motion-command-handler   servo-thread
-addf    motion-controller        servo-thread
-addf    bitslice.0 servo-thread
-addf    bitslice.1 servo-thread
-addf    bitslice.2 servo-thread
-addf    logic.0 servo-thread
-addf    conv-float-s32.0 servo-thread
-addf    cia402.0.write-all       servo-thread
-addf    cia402.1.write-all       servo-thread
-addf    cia402.2.write-all       servo-thread
-addf    lcec.write-all           servo-thread
+addf    lcec.read-all           servo-thread
+addf    cia402.0.read-all       servo-thread
+addf    cia402.1.read-all       servo-thread
+addf    cia402.2.read-all       servo-thread
+addf    motion-command-handler  servo-thread
+addf    motion-controller       servo-thread
+addf    bitslice.0              servo-thread
+addf    bitslice.1              servo-thread
+addf    bitslice.2              servo-thread
+addf    logic.0                 servo-thread
+addf    mux2.spindle-enable     servo-thread
+addf    conv-float-s32.0        servo-thread
+addf    spindle_s32_float       servo-thread
+addf    conv-float-u32.0        servo-thread
+addf    spindlenear             servo-thread
+addf    cia402.0.write-all      servo-thread
+addf    cia402.1.write-all      servo-thread
+addf    cia402.2.write-all      servo-thread
+addf    lcec.write-all          servo-thread
 
 # Enable EMC control
 # safety-relay enabled on lcec.0.3.din-0
@@ -181,9 +194,39 @@ net motion-probe logic.0.or => motion.probe-input
 #  ETHERCAT SPINDLE 
 #*******************
 
-# lcec.0.3G3AX-MX2-ECT.srv-cia-controlword
+# Spindle cooling fan
+# lcec.0.1.dout-0   controls relay for +24VDC to spindle cooling fan
+# spindle.M.on OUT BIT TRUE when spindle should rotate.
+net spindle-on spindle.0.on => lcec.0.1.dout-0
+
+# VFD controlword
+# lcec.0.MX2.srv-cia-controlword
 #  OFF: 10
 #   ON: 15
+setp mux2.spindle-enable.in0 10
+setp mux2.spindle-enable.in1 15
+net spindle-conv        mux2.spindle-enable.out     => conv-float-u32.0.in 
+net spindle-ctrl-cmd    conv-float-u32.0.out        => lcec.0.MX2.srv-cia-controlword 
+net spindle-on          mux2.spindle-enable.sel
 
-net spindlespeed spindle.0.speed-out conv-float-s32.0.in  
-net speed_out conv-float-s32.0.out lcec.0.MX2.srv-target-vl
+# VFD RPM setting
+# spindle.M.speed-out OUT FLOAT Desired spindle speed in rotations per minute.
+net spindle-speed        spindle.0.speed-out     conv-float-s32.0.in  
+net spindle-speed-s32    conv-float-s32.0.out    lcec.0.MX2.srv-target-vl
+
+# VFD RPM monitoring
+# lcec.0.MX2.srv-actual-vl OUT s32 indicates actual spindle rpm
+# spindle.M.at-speed IN BIT Motion will pause until this pin is TRUE,
+setp spindlenear.scale  1.1
+net spindle-speed spindlenear.in1
+net spindle-act-speed-s32 lcec.0.MX2.srv-actual-vl  spindle_s32_float.in  
+net spindle-act-speed spindle_s32_float.out spindlenear.in2
+net spindle-at-speed spindlenear.out spindle.0.at-speed
+
+# VFD Fault
+# spindle.M.amp-fault-in  IN BIT Should be driven TRUE if an external fault is detected
+# lcec.0.MX2.srv-error-code  u32 should be zero?
+
+#*******************
+#  END 
+#*******************
