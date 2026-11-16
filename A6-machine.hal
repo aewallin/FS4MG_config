@@ -68,8 +68,11 @@ setp cia402.1.pos-scale [JOINT_0]POS_SCALE
 setp cia402.2.pos-scale [JOINT_0]POS_SCALE
 
 setp joint.0.jog-accel-fraction 0.3
-setp joint.1.jog-accel-fraction 0.5
-setp joint.2.jog-accel-fraction 0.5
+setp joint.1.jog-accel-fraction 0.3
+setp joint.2.jog-accel-fraction 0.3
+setp axis.x.jog-accel-fraction 0.3
+setp axis.y.jog-accel-fraction 0.3
+setp axis.z.jog-accel-fraction 0.3
 
 #***********************************
 # Motion signal mappings for axis X
@@ -124,7 +127,7 @@ net j1-homing-error  cia402.1.stat-homing-error => joint.1.cia-stat-homing-error
 net j1-drive-fault   cia402.1.stat-fault      => joint.1.cia-stat-fault
 net j1-op-enabled    cia402.1.stat-op-enabled => joint.1.cia-stat-op-enabled
 setp joint.1.request-custom-homing 1
-setp joint.1.cia-timeout-ms 30000
+setp joint.1.cia-timeout-ms 60000
 setp lcec.0.A6Y.homing-method [JOINT_1]CIA402_HOMING_METHOD
 setp lcec.0.A6Y.homing-high-velocity [JOINT_1]CIA402_HOMING_SEARCH_VELOCITY
 setp lcec.0.A6Y.homing-low-velocity [JOINT_1]CIA402_HOMING_LATCH_VELOCITY

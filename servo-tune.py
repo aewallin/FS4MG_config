@@ -17,7 +17,8 @@ from tkinter import filedialog, messagebox
 
 #DRIVES = [(0, "x-left"), (1, "x-right"), (2, "y"), (3, "z")]
 DRIVES = [(5, "A6X"),  (6, "A6Y"), (7, "A6Z")]
-POS_SCALE =  26214.4 # scale following error in encoder units to mm
+POS_SCALE =  1 # use 1 if following error already scaled in XML file
+# 26214.4 # scale following error in encoder units to mm
 #GANTRY = (0, 1)
 GANTRY = ()
 
