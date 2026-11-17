@@ -15,6 +15,7 @@ Linuxcnc configuration for my 3-axis mill.
     * Outputs 2pcs EL2809 ( `lcec.0.1` and `lcec.0.2`)
         * `lcec.0.1.dout-0`: control +24VDC via relay for spindle cooling fan
         * `lcec.0.1.dout-1`: buzzer to indicate probe triggered
+        * `lcec.0.1.dout-2`: control flood coolant relay
     * Inputs 2pcs EL1809 ( `lcec.0.3` and `lcec.0.4`)
         * `lcec.0.3.din-0` external e-stop signal from safety-relay, wired to `iocontrol.0.emc-enable-in`
 * Omron 3G3MX2-A4030-E VFD with 3G3AX-MX2-ECT Ethercat module

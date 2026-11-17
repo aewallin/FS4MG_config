@@ -200,6 +200,12 @@ net probe-buzz buzzer.out lcec.0.1.dout-1
 setp buzzer.width 0.05
 
 #*******************
+#  FLOOD COOLANT
+#*******************
+# coolant relay lcec.0.1.dout-2
+net coolant iocontrol.0.coolant-flood lcec.0.1.dout-2
+
+#*******************
 #  ETHERCAT SPINDLE 
 #*******************
 
